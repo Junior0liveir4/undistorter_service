@@ -1,0 +1,173 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: undistorter-config
+  namespace: default
+data:
+  camera_id_1: "1"
+  camera_id_2: "2"
+  camera_id_3: "3"
+  camera_id_4: "4"
+  broker_uri: "amqp://rabbitmq:5672/"
+  zipkin_host: "zipkin"
+  zipkin_port: "9411"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: undistorter-cam-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: undistorter-1
+  template:
+    metadata:
+      labels:
+        app: undistorter-1
+    spec:
+      containers:
+        - name: undistorter
+          image: juniorgui/undistorter_service:v1
+          imagePullPolicy: Always
+          env:
+            - name: camera_id
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: camera_id_1
+            - name: broker
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: broker_uri
+            - name: zipkin_host
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_host
+            - name: zipkin_port
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: undistorter-cam-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: undistorter-2
+  template:
+    metadata:
+      labels:
+        app: undistorter-2
+    spec:
+      containers:
+        - name: undistorter
+          image: juniorgui/undistorter_service:v1
+          imagePullPolicy: Always
+          env:
+            - name: camera_id
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: camera_id_2
+            - name: broker
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: broker_uri
+            - name: zipkin_host
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_host
+            - name: zipkin_port
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: undistorter-cam-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: undistorter-3
+  template:
+    metadata:
+      labels:
+        app: undistorter-3
+    spec:
+      containers:
+        - name: undistorter
+          image: juniorgui/undistorter_service:v1
+          imagePullPolicy: Always
+          env:
+            - name: camera_id
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: camera_id_3
+            - name: broker
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: broker_uri
+            - name: zipkin_host
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_host
+            - name: zipkin_port
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: undistorter-cam-4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: undistorter-4
+  template:
+    metadata:
+      labels:
+        app: undistorter-4
+    spec:
+      containers:
+        - name: undistorter
+          image: juniorgui/undistorter_service:v1
+          imagePullPolicy: Always
+          env:
+            - name: camera_id
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: camera_id_4
+            - name: broker
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: broker_uri
+            - name: zipkin_host
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_host
+            - name: zipkin_port
+              valueFrom:
+                configMapKeyRef:
+                  name: undistorter-config
+                  key: zipkin_port
