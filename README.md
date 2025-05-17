@@ -1,5 +1,4 @@
-
-# 📷 undistorter_service
+# 📷 Undistorter Service
 
 Microsserviço responsável por remover a distorção das imagens publicadas pelas câmeras do LabSEA, preparando os dados para aplicações futuras de **visão computacional**, **localização espacial** e **reconstrução 3D**.
 
@@ -41,13 +40,12 @@ As dependências estão listadas no `requirements.txt`. Principais:
 
 ```
 /matrix_cams/
-├── calib_rt0.npz
 ├── calib_rt1.npz
 ├── calib_rt2.npz
-└── calib_rt3.npz
-```
+├── calib_rt3.npz
+└── calib_rt4.npz
 
-Esses arquivos devem conter as matrizes de calibração:
+Esses arquivos contẽm as matrizes de calibração:
 
 - `K` – matriz intrínseca da câmera
 - `dist` – coeficientes de distorção
@@ -80,13 +78,12 @@ Cada operação de distorção exporta um *span* para o **Zipkin**, com o nome `
 - RabbitMQ rodando e acessível pelo endereço informado
 - Zipkin acessível
 - Imagem Docker da aplicação publicada
-- PVC (se necessário) montado com os `.npz`
 
 ### 📄 Arquivo YAML
 
 O arquivo `undistorter_service.yaml` define:
 
-- 4 pods (`undistorter-cam0` a `undistorter-cam3`)
+- 4 pods (`undistorter-cam-1` a `undistorter-cam-4`)
 - Um `ConfigMap` que fornece:
   - `camera_id`
   - Endereço do `broker` e `zipkin`
@@ -101,7 +98,7 @@ Verifique os pods:
 
 ```bash
 kubectl get pods
-kubectl logs undistorter-cam0
+kubectl logs undistorter-cam-1
 ```
 
 ---
@@ -110,7 +107,7 @@ kubectl logs undistorter-cam0
 
 | Variável        | Descrição                           |
 |----------------|--------------------------------------|
-| `camera_id`     | ID da câmera (0 a 3)                |
+| `camera_id`     | ID da câmera (1 a 4)                |
 | `broker`        | URI do broker RabbitMQ              |
 | `zipkin_host`   | Host do serviço Zipkin              |
 | `zipkin_port`   | Porta do Zipkin (ex: 9411)          |
@@ -154,4 +151,3 @@ Esse microsserviço foi projetado para:
 ## 👤 Autor e Licença
 
 - Desenvolvido por: **LabSEA - IFES Campus Guarapari**
-- Licença: MIT (ou outra de sua escolha)
