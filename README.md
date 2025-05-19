@@ -148,6 +148,6 @@ Esse microsserviço foi projetado para:
 
 ---
 
-## 👤 Autor e Licença
+## 📬 Contato
 
-- Desenvolvido por: **LabSEA - IFES Campus Guarapari**
+Para dúvidas ou sugestões, entre em contato com o time do **LabSEA**.
